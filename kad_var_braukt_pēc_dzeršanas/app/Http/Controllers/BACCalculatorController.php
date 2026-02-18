@@ -10,7 +10,7 @@ class BACCalculatorController extends Controller
     public function index()
     {
         $history = BACCalculation::latest()->paginate(10);
-        return view('bac_calculator.index', compact('history'));
+        return view('bac-calculator.index', compact('history'));
     }
 
     public function calculate(Request $request)
