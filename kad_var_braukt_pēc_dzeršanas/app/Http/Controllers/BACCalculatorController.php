@@ -60,17 +60,20 @@ class BACCalculatorController extends Controller
             'estimated_sober_minutes' => $sober_time_minutes,
         ]);
 
-        return response()->json([
-            'success' => true,
-            'bac_initial' => round($bac, 2),
-            'bac_current' => round($bac_after_time, 2),
-            'status' => $status,
-            'message' => $message,
-            'sober_time_hours' => floor($sober_time_hours),
-            'sober_time_minutes' => round(($sober_time_hours % 1) * 60),
-            'estimated_sober_minutes' => $sober_time_minutes,
+        return redirect()->route('bac.timer', [
+            'sober_time_minutes' => $sober_time_minutes,
+            'message' => $message
         ]);
     }
+
+    public function timer(Request $request)
+    {
+        $sober_time_minutes = $request->query('sober_time_minutes');
+        $message = $request->query('message');
+
+        return view('bac-calculator.timer', compact('sober_time_minutes', 'message'));
+    }
+
     public function history()
     {
         if (!auth()->check()) {
@@ -89,5 +92,6 @@ class BACCalculatorController extends Controller
         $calculation->delete();
         return redirect()->route('bac.history')->with('success', 'Entry deleted successfully.');
     }
+
 
 }

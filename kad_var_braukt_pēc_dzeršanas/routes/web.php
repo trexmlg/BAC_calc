@@ -5,11 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [BACCalculatorController::class, 'index'])->name('bac.index');
-Route::post('/calculate', [BACCalculatorController::class, 'calculate'])->name('bac.calculate');
+Route::match(['get', 'post'], '/calculate', [BACCalculatorController::class, 'calculate'])->name('bac.calculate');
 Route::get('/history', [BACCalculatorController::class, 'history'])->name('bac.history');
-Route::get('/design_test', function () {
-    return view('test.blade.php');
-});
+
+Route::get('/timer', [BACCalculatorController::class, 'timer'])->name('bac.timer');
 
 
 
